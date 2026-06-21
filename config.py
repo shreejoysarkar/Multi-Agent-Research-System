@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     TAVILY_API_KEY: str
 
     # Mistral Configuration
-    MISTRAL_API_KEY: str
+   GROQ_API_KEY: str
 
     # API Settings
     api_host: str = "0.0.0.0"
