@@ -27,6 +27,10 @@ Enter a topic, and the system will:
 
 All of this is accessible through a sleek **Streamlit dashboard** or via the **command line**.
 
+### 🌐 Live Demo
+
+👉 **[Try it now — Multi-Agent Research System](https://multi-agent-research-system-3nlmuwwn7nucj5eyisjzcr.streamlit.app/)**
+
 ---
 
 ## 🏗️ Architecture
