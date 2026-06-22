@@ -16,3 +16,4 @@ pydantic-settings
 python-dotenv
 
 rich
+streamlit

@@ -24,16 +24,30 @@ llm = ChatGroq(
 def build_search_agent():
     return create_agent(
         model = llm,
-        tools = [web_search]
-
+        tools = [web_search],
+        system_prompt=(
+            "You are a Search Agent in a Multi-Agent Research System. "
+            "Your job is to search the web to find relevant, recent, and reliable "
+            "information on the given topic.\n\n"
+            "IMPORTANT: In your final answer you MUST include the full URL for every "
+            "result. Format each result exactly like this:\n"
+            "- Title: <title>\n"
+            "  URL: <full https://... URL>\n"
+            "  Snippet: <brief summary>\n\n"
+            "Never omit or shorten URLs. The downstream agents depend on them."
+        ),
     )
 
 
 def build_research_agent():
     return create_agent(
         model = llm,
-        tools = [web_scraper]
-
+        tools = [web_scraper],
+        system_prompt=(
+            "You are a Research Agent in a Multi-Agent Research System. "
+            "Given a URL or list of URLs, scrape and extract the full article content. "
+            "Return the extracted content clearly organised by source."
+        ),
     )
 
 
@@ -52,11 +66,10 @@ writer_prompt = ChatPromptTemplate.from_messages([
      "- Ensure factual accuracy — do not hallucinate or add information not present in the research."
     ),
     ("user", "{input}"),
-    ("placeholder", "{agent_scratchpad}"),
 ])
 
 
-chain = writer_prompt | llm | StrOutputParser()
+writer_chain = writer_prompt | llm | StrOutputParser()
 
 critics_prompt = ChatPromptTemplate.from_messages([
     ("system",
@@ -83,5 +96,3 @@ You are a Peer Review Agent in a Multi-Agent Research System.
 
 
 critics_chain = critics_prompt | llm | StrOutputParser()
-
-
